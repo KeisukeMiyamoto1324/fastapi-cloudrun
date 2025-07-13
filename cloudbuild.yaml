@@ -1,0 +1,31 @@
+steps:
+# 1. Dockerイメージをビルドする
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['build', '-t', 'us-central1-docker.pkg.dev/fastapi-cloudrun-465814/fastapi-cloudrun-repo/fastapi-app:latest', '.']
+
+# 2. ビルドしたイメージをArtifact Registryにプッシュする
+- name: 'gcr.io/cloud-builders/docker'
+  args: ['push', 'us-central1-docker.pkg.dev/fastapi-cloudrun-465814/fastapi-cloudrun-repo/fastapi-app:latest']
+
+# 3. 新しいイメージをCloud Runにデプロイする
+- name: 'gcr.io/google-appengine/exec-wrapper'
+  args:
+  - '-i'
+  - 'us-central1-docker.pkg.dev/fastapi-cloudrun-465814/fastapi-cloudrun-repo/fastapi-app:latest'
+  - '-e'
+  - 'PORT=8080'
+  - '--'
+  - 'gcloud'
+  - 'run'
+  - 'deploy'
+  - 'fastapi-service' # Cloud Runのサービス名
+  - '--image'
+  - 'us-central1-docker.pkg.dev/fastapi-cloudrun-465814/fastapi-cloudrun-repo/fastapi-app:latest'
+  - '--region'
+  - 'us-central1'
+  - '--platform'
+  - 'managed'
+  - '--no-allow-unauthenticated' # API Gatewayからのアクセスのみ許可する
+
+images:
+- 'us-central1-docker.pkg.dev/fastapi-cloudrun-465814/fastapi-cloudrun-repo/fastapi-app:latest'
