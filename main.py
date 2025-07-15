@@ -8,4 +8,4 @@ def hello():
 
 @app.get("/echo")
 def echo(text: str = Query(..., description="Text to echo back")):
-    return {"echo": text}
+    return {"echo": text+" hogehoge!!"}
