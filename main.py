@@ -12,7 +12,7 @@ def echo(text: str = Query(..., description="Text to echo back")):
     return {"echo": text+" thank you using this api!!"}
 
 @app.get("/youtube")
-def echo(video_id: str = Query(..., description="The id of YouTube video")):
+def youtube(video_id: str = Query(..., description="The id of YouTube video")):
     transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
     text = ""
 
