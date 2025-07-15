@@ -31,3 +31,10 @@ steps:
 # デプロイに使用したイメージを登録
 images:
   - 'us-central1-docker.pkg.dev/$PROJECT_ID/fastapi-cloudrun/fastapi-service:$COMMIT_SHA'
+
+# ログオプションを追加（これが重要）
+options:
+  logging: CLOUD_LOGGING_ONLY
+
+
+gcloud beta builds triggers create github --name="deploy-on-push" --repo-owner="$GITHUB_USER" --repo-name="$GITHUB_REPO_NAME" --branch-pattern="^main$" --build-config="cloudbuild.yaml" --region=$REGION
