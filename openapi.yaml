@@ -1,0 +1,63 @@
+swagger: '2.0'
+info:
+  title: FastAPI on Cloud Run Gateway
+  description: API Gateway for FastAPI service on Cloud Run
+  version: 1.0.0
+schemes:
+  - https
+produces:
+  - application/json
+paths:
+  /:
+    get:
+      summary: Hello World
+      operationId: hello
+      x-google-backend:
+        address: https://fastapi-service-4s27tvkmmq-uc.a.run.app
+        jwt_audience: https://fastapi-service-4s27tvkmmq-uc.a.run.app
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: A successful response
+  /echo:
+    get:
+      summary: Echo back text
+      operationId: echo
+      parameters:
+        - name: text
+          in: query
+          required: true
+          type: string
+      x-google-backend:
+        address: https://fastapi-service-4s27tvkmmq-uc.a.run.app/echo
+        jwt_audience: https://fastapi-service-4s27tvkmmq-uc.a.run.app
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: A successful response
+
+  /youtube:
+    get:
+      summary: Echo back text
+      operationId: youtube
+      parameters:
+        - name: video_id
+          in: query
+          required: true
+          type: string
+      x-google-backend:
+        address: https://fastapi-service-4s27tvkmmq-uc.a.run.app/youtube
+        jwt_audience: https://fastapi-service-4s27tvkmmq-uc.a.run.app
+      security:
+        - api_key: []
+      responses:
+        '200':
+          description: A successful response
+
+securityDefinitions:
+  api_key:
+    type: "apiKey"
+    name: "key"
+    in: "query"
