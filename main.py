@@ -13,10 +13,11 @@ def echo(text: str = Query(..., description="Text to echo back")):
 
 @app.get("/youtube")
 def youtube(video_id: str = Query(..., description="The id of YouTube video")):
-    transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
-    text = ""
+    return {"transcript": "youtube!!"}
+    # transcript_list = YouTubeTranscriptApi.list_transcripts(video_id)
+    # text = ""
 
-    for transcript in transcript_list:
-        for tr in transcript.fetch():
-            text += tr.text
-    return {"transcript": text}
+    # for transcript in transcript_list:
+    #     for tr in transcript.fetch():
+    #         text += tr.text
+    # return {"transcript": text}
