@@ -14,8 +14,7 @@ steps:
       - 'us-central1-docker.pkg.dev/$PROJECT_ID/fastapi-cloudrun/fastapi-service:$COMMIT_SHA'
 
   # 3. Cloud Runに新しいイメージをデプロイ
-  - name: 'gcr.io/google-cloud-sdk/gcloud'
-    entrypoint: gcloud
+  - name: 'gcr.io/cloud-builders/gcloud'
     args:
       - 'run'
       - 'deploy'
